@@ -30,14 +30,24 @@ export default function HeroSection({ botStats, isLoading }: HeroSectionProps) {
             dis bad • ima cry • crime when • to medal • aired
           </p>
           
-          {/* Phrases display */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
+          {/* Phrases display - more floating style */}
+          <div className="flex flex-wrap justify-center gap-6 mb-12">
             {phrases.map((phrase, index) => (
-              <div key={index} className="bg-dark-light rounded-lg p-4 border border-primary/30 hover:border-primary transition-all duration-300">
-                <p className="text-white font-mono text-lg font-semibold">"{phrase}"</p>
+              <div 
+                key={index} 
+                className="relative bg-transparent px-5 py-3 transform hover:-translate-y-2 hover:rotate-1 transition-all duration-300"
+                style={{
+                  animation: `float ${2 + index * 0.5}s ease-in-out infinite alternate`,
+                }}
+              >
+                <span className="absolute inset-0 bg-dark-light opacity-60 rounded-full blur-sm"></span>
+                <span className="absolute inset-0 border border-primary/40 rounded-full"></span>
+                <p className="relative text-white font-mono text-lg font-semibold">"{phrase}"</p>
               </div>
             ))}
           </div>
+          
+          {/* Add floating animation keyframes to index.css later */}
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
             <Button asChild size="xl">
@@ -57,18 +67,21 @@ export default function HeroSection({ botStats, isLoading }: HeroSectionProps) {
             isLoading={isLoading}
           />
 
-          {/* Server Online Since */}
-          <div className="mt-8 bg-dark-light rounded-xl p-6 max-w-md mx-auto border border-primary shadow-lg">
-            <h2 className="text-lg font-semibold text-white mb-2">Server Online Since</h2>
-            {isLoading ? (
-              <Skeleton className="h-10 w-[250px] mx-auto bg-dark-lighter" />
-            ) : (
-              <div className="font-poppins text-primary text-2xl font-bold uptime-display">
-                {botStats 
-                  ? formatUptimeString(botStats.uptimeDays, botStats.uptimeHours, botStats.uptimeMinutes) 
-                  : "Fetching uptime..."}
-              </div>
-            )}
+          {/* Server Online Since - with floating style */}
+          <div className="mt-12 max-w-md mx-auto relative">
+            <div className="absolute inset-0 bg-primary/10 rounded-full blur-xl"></div>
+            <div className="relative py-6 float-slow">
+              <h2 className="text-lg font-semibold text-white mb-2">Server Online Since</h2>
+              {isLoading ? (
+                <Skeleton className="h-10 w-[250px] mx-auto bg-dark-lighter" />
+              ) : (
+                <div className="font-poppins text-primary text-2xl font-bold uptime-display">
+                  {botStats 
+                    ? formatUptimeString(botStats.uptimeDays, botStats.uptimeHours, botStats.uptimeMinutes) 
+                    : "Fetching uptime..."}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

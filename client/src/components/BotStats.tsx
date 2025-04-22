@@ -85,15 +85,21 @@ interface StatCardProps {
 
 function StatCard({ value, label, isLoading }: StatCardProps) {
   return (
-    <div className="bg-dark-light rounded-xl p-6 shadow-lg border border-dark-lighter hover:border-primary transition duration-300">
-      {isLoading ? (
-        <Skeleton className="h-10 w-20 mb-2 bg-dark-lighter" />
-      ) : (
-        <div className="font-poppins font-bold text-4xl text-white mb-2">
-          {value.toLocaleString()}
-        </div>
-      )}
-      <div className="text-light-gray">{label}</div>
+    <div className="relative group">
+      {/* Blurred background */}
+      <div className="absolute inset-0 bg-primary/5 rounded-full blur-lg group-hover:bg-primary/10 transition-all duration-500"></div>
+      
+      {/* Main content */}
+      <div className="relative p-6 backdrop-blur-sm hover:-translate-y-1 transition duration-300 float-medium">
+        {isLoading ? (
+          <Skeleton className="h-10 w-20 mb-2 bg-dark-lighter/50" />
+        ) : (
+          <div className="font-poppins font-bold text-4xl text-white mb-2">
+            {value.toLocaleString()}
+          </div>
+        )}
+        <div className="text-light-gray">{label}</div>
+      </div>
     </div>
   );
 }

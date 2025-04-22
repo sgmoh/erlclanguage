@@ -7,7 +7,7 @@ export default function Navbar() {
       <div className="container mx-auto px-4 md:px-6 flex justify-between items-center">
         <div className="flex items-center">
           <h1 className="text-white font-poppins font-bold text-xl md:text-2xl">
-            <span className="text-primary">ERLC</span> LANGUAGE COMMUNITY
+            <span className="text-primary">Erlc</span> Language
           </h1>
         </div>
         <div className="flex items-center space-x-4">

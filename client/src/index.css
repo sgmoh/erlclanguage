@@ -57,3 +57,40 @@
   }
 }
 
+/* Custom animations and styles */
+
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(0);
+  }
+  100% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+}
+
+.gradient-text {
+  background: linear-gradient(to right, #ff3333, #ff6666);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+/* For the server uptime display */
+.uptime-display {
+  text-shadow: 0 0 10px rgba(255, 51, 51, 0.3);
+}
+
+/* For animating elements to make them more "floating" */
+.float-slow {
+  animation: float 3s ease-in-out infinite alternate;
+}
+
+.float-medium {
+  animation: float 2s ease-in-out infinite alternate;
+}
+
+.float-fast {
+  animation: float 1.5s ease-in-out infinite alternate;
+}
+
