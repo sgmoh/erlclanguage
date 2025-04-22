@@ -1,0 +1,14 @@
+
+monitors:
+  - name: ERLC Language Bot
+    url: ${DEPLOYMENT_URL}/health
+    type: http
+    method: GET
+    interval: 300 # Check every 5 minutes
+    alerts:
+      - type: email
+      - type: webhook
+        url: ${WEBHOOK_URL}
+    timeout: 30
+    status: up
+    maintenance_windows: []
