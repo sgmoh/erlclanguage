@@ -164,6 +164,11 @@ async function initializeBot() {
   }
 }
 
+// Health check endpoint for uptime monitoring
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'healthy', timestamp: new Date().toISOString() });
+});
+
 // Add sample data to the logs for demonstration
 function addSampleMemberData() {
   // Add some sample data for join logs
