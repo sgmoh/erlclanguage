@@ -13,7 +13,7 @@ const communityMessages = [
   { user: "itsgalaxy_x", message: "dis bad, nah ima pass out fr?" },
   { user: "stermix", message: "crime when? yes aired to medal ez son" },
   { user: "itsgalaxy_x", message: "ima coma one star main" },
-  { user: "stermix", message: "that dude just aired me completely, dis bad" }
+  { user: "stermix", message: "galaxy crime when? cop main" }
 ];
 
 export default function CommunityPhrasesSection() {
