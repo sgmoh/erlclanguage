@@ -42,6 +42,10 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  if (!process.env.DISCORD_BOT_TOKEN) {
+    console.error('Discord bot token not found! Please set DISCORD_BOT_TOKEN in Secrets tab');
+  }
+  
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
