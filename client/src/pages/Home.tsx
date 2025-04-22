@@ -20,7 +20,6 @@ export default function Home() {
       <BackgroundAnimation />
       <Navbar />
       <HeroSection botStats={botStats} isLoading={isLoading} />
-      <FeaturesSection />
       <CommunityPhrasesSection />
       <CommandsSection />
       <CallToAction />

@@ -9,11 +9,11 @@ const communityPhrases = [
 ];
 
 const communityMessages = [
-  { user: "stermix", message: "ima cry, they just closed the hospital right as I got there" },
-  { user: "itsgalaxy_x", message: "dis bad, everybody keeps running through red lights" },
-  { user: "stermix", message: "crime when? I'm bored and want some action" },
-  { user: "itsgalaxy_x", message: "I got to medal yesterday for saving 10 citizens!" },
-  { user: "stermix", message: "I said hi to that new player and got aired completely :(" }
+  { user: "stermix", message: "omg this guy cant crime ima cry" },
+  { user: "itsgalaxy_x", message: "dis bad, nah ima pass out fr?" },
+  { user: "stermix", message: "crime when? yes aired to medal ez son" },
+  { user: "itsgalaxy_x", message: "ima coma one star main" },
+  { user: "stermix", message: "that dude just aired me completely, dis bad" }
 ];
 
 export default function CommunityPhrasesSection() {
