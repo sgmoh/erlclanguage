@@ -1,11 +1,12 @@
 
 services:
   - type: web
-    name: erlc-language-bot
+    name: erlc-language
     env: node
     buildCommand: npm install && npm run build
-    startCommand: npm run start
+    startCommand: NODE_ENV=production npm run start
     envVars:
       - key: NODE_ENV
         value: production
     autoDeploy: true
+    healthCheckPath: /health
