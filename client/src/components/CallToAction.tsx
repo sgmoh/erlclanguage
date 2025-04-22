@@ -17,7 +17,7 @@ export default function CallToAction() {
           className="animate-bounce-slow"
         >
           <a 
-            href="https://discord.com/api/oauth2/authorize" 
+            href="https://discord.gg/s7AD9cqZ" 
             target="_blank" 
             rel="noopener noreferrer"
           >
