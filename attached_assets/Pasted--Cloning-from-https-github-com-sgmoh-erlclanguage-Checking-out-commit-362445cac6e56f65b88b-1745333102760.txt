@@ -1,0 +1,36 @@
+==> Cloning from https://github.com/sgmoh/erlclanguage
+==> Checking out commit 362445cac6e56f65b88bb3425c5089c3c2ccef6c in branch main
+==> Using Node.js version 22.14.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a bun version: https://render.com/docs/bun-version
+==> Running build command 'npm install; npm run build'...
+added 506 packages, and audited 507 packages in 9s
+76 packages are looking for funding
+  run `npm fund` for details
+7 moderate severity vulnerabilities
+To address issues that do not require attention, run:
+  npm audit fix
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Run `npm audit` for details.
+> rest-express@1.0.0 build
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+vite v5.4.14 building for production...
+✓ 0 modules transformed.
+x Build failed in 29ms
+error during build:
+[vite:build-html] URI malformed
+file: /opt/render/project/src/client/index.html
+    at decodeURI (<anonymous>)
+    at file:///opt/render/project/src/node_modules/vite/dist/node/chunks/dep-CHZK6zbr.js:35328:31
+    at traverseNodes (file:///opt/render/project/src/node_modules/vite/dist/node/chunks/dep-CHZK6zbr.js:35085:3)
+    at file:///opt/render/project/src/node_modules/vite/dist/node/chunks/dep-CHZK6zbr.js:35087:44
+    at Array.forEach (<anonymous>)
+    at traverseNodes (file:///opt/render/project/src/node_modules/vite/dist/node/chunks/dep-CHZK6zbr.js:35087:21)
+    at file:///opt/render/project/src/node_modules/vite/dist/node/chunks/dep-CHZK6zbr.js:35087:44
+    at Array.forEach (<anonymous>)
+    at traverseNodes (file:///opt/render/project/src/node_modules/vite/dist/node/chunks/dep-CHZK6zbr.js:35087:21)
+    at file:///opt/render/project/src/node_modules/vite/dist/node/chunks/dep-CHZK6zbr.js:35087:44
+==> Build failed 😞
+==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
