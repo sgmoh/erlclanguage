@@ -51,6 +51,31 @@ setInterval(() => {
   }
 }, 60000);
 
+// Function to find logs channel in a guild
+function findLogsChannel(guild: any) {
+  // Try to find a channel with 'logs', 'log', 'audit', 'mod-log', etc. in the name
+  const logsChannel = guild.channels.cache.find((channel: any) => {
+    if (channel.type !== 0) return false; // Only text channels
+    const name = channel.name.toLowerCase();
+    return name.includes('log') || name.includes('audit') || name.includes('join') || 
+           name.includes('leave') || name.includes('mod');
+  });
+  
+  // If no logs channel found, try to use 'general' or any text channel
+  if (!logsChannel) {
+    return guild.channels.cache.find((channel: any) => 
+      channel.type === 0 && (
+        channel.name.toLowerCase().includes('general') || 
+        channel.name.toLowerCase().includes('chat')
+      )
+    ) || 
+    // Last resort: just get the first text channel
+    guild.channels.cache.find((channel: any) => channel.type === 0);
+  }
+  
+  return logsChannel;
+}
+
 // Initialize Discord bot
 async function initializeBot() {
   if (botInitialized) return;
@@ -73,7 +98,7 @@ async function initializeBot() {
     
     // Listen for member join events
     client.on(Events.GuildMemberAdd, member => {
-      // Add to recent joins
+      // Add to recent joins log
       const joinEntry = {
         username: member.user.tag,
         timestamp: new Date(),
@@ -83,12 +108,27 @@ async function initializeBot() {
       recentJoins.unshift(joinEntry); // Add to beginning of array
       if (recentJoins.length > 10) recentJoins.pop(); // Keep only the 10 most recent
       
+      // Send join notification to the logs channel
+      const logsChannel = findLogsChannel(member.guild);
+      if (logsChannel && logsChannel.type === 0) { // TextChannel
+        const joinEmbed = new EmbedBuilder()
+          .setTitle('Member Joined')
+          .setColor(0x00FF00) // Green for joins
+          .setDescription(`${member.user.tag} has joined the server.`)
+          .setThumbnail(member.user.displayAvatarURL())
+          .setTimestamp()
+          .setFooter({ text: 'ERLC Language Community' });
+        
+        logsChannel.send({ embeds: [joinEmbed] })
+          .catch((err: Error) => console.error('Error sending join notification:', err));
+      }
+      
       console.log(`Member joined: ${member.user.tag}`);
     });
     
     // Listen for member leave events
     client.on(Events.GuildMemberRemove, member => {
-      // Add to recent leaves
+      // Add to recent leaves log
       const leaveEntry = {
         username: member.user.tag,
         timestamp: new Date(),
@@ -97,6 +137,21 @@ async function initializeBot() {
       
       recentLeaves.unshift(leaveEntry); // Add to beginning of array
       if (recentLeaves.length > 10) recentLeaves.pop(); // Keep only the 10 most recent
+      
+      // Send leave notification to the logs channel
+      const logsChannel = findLogsChannel(member.guild);
+      if (logsChannel && logsChannel.type === 0) { // TextChannel
+        const leaveEmbed = new EmbedBuilder()
+          .setTitle('Member Left')
+          .setColor(0xFF0000) // Red for leaves
+          .setDescription(`${member.user.tag} has left the server.`)
+          .setThumbnail(member.user.displayAvatarURL())
+          .setTimestamp()
+          .setFooter({ text: 'ERLC Language Community' });
+          
+        logsChannel.send({ embeds: [leaveEmbed] })
+          .catch((err: Error) => console.error('Error sending leave notification:', err));
+      }
       
       console.log(`Member left: ${member.user.tag}`);
     });
@@ -261,9 +316,9 @@ async function handlePurgeCommand(message: Message, args: string[]) {
       const deleted = await message.channel.bulkDelete(amount, true);
       message.channel.send(`Successfully deleted ${deleted.size} messages.`)
         .then(msg => {
-          setTimeout(() => msg.delete().catch(err => console.error('Error deleting message:', err)), 5000);
+          setTimeout(() => msg.delete().catch((err: Error) => console.error('Error deleting message:', err)), 5000);
         })
-        .catch(err => console.error('Error sending message:', err));
+        .catch((err: Error) => console.error('Error sending message:', err));
     }
   } catch (error) {
     console.error('Error purging messages:', error);
