@@ -34,6 +34,10 @@ let userCount = 0;
 let commandCount = 32;
 let botInitialized = false;
 
+// Store recent member logs - last 10 of each type
+const recentJoins: Array<{username: string, timestamp: Date, avatarUrl?: string}> = [];
+const recentLeaves: Array<{username: string, timestamp: Date, avatarUrl?: string}> = [];
+
 // Update uptime every minute
 setInterval(() => {
   uptimeMinutes++;
@@ -60,14 +64,70 @@ async function initializeBot() {
       console.log(`Discord bot logged in as ${client.user?.tag}!`);
       await updateBotStats();
       setInterval(updateBotStats, 60000); // Update stats every minute
+      
+      // Add some sample data to the logs for demonstration
+      addSampleMemberData();
+      
       botInitialized = true;
     });
+    
+    // Listen for member join events
+    client.on(Events.GuildMemberAdd, member => {
+      // Add to recent joins
+      const joinEntry = {
+        username: member.user.tag,
+        timestamp: new Date(),
+        avatarUrl: member.user.displayAvatarURL()
+      };
+      
+      recentJoins.unshift(joinEntry); // Add to beginning of array
+      if (recentJoins.length > 10) recentJoins.pop(); // Keep only the 10 most recent
+      
+      console.log(`Member joined: ${member.user.tag}`);
+    });
+    
+    // Listen for member leave events
+    client.on(Events.GuildMemberRemove, member => {
+      // Add to recent leaves
+      const leaveEntry = {
+        username: member.user.tag,
+        timestamp: new Date(),
+        avatarUrl: member.user.displayAvatarURL()
+      };
+      
+      recentLeaves.unshift(leaveEntry); // Add to beginning of array
+      if (recentLeaves.length > 10) recentLeaves.pop(); // Keep only the 10 most recent
+      
+      console.log(`Member left: ${member.user.tag}`);
+    });
+    
   } catch (error) {
     console.error('Failed to connect to Discord:', error);
     // Use fallback values if connection fails
     serverCount = 15;
     userCount = 1872;
   }
+}
+
+// Add sample data to the logs for demonstration
+function addSampleMemberData() {
+  // Add some sample data for join logs
+  const sampleJoins = [
+    { username: 'stermix#1234', timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2) }, // 2 hours ago
+    { username: 'itsgalaxy_x#5678', timestamp: new Date(Date.now() - 1000 * 60 * 60 * 5) }, // 5 hours ago
+    { username: 'erlc_player123#9012', timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24) }, // 1 day ago
+    { username: 'copMain#3456', timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2) } // 2 days ago
+  ];
+  
+  // Add some sample data for leave logs
+  const sampleLeaves = [
+    { username: 'toxic_player#8765', timestamp: new Date(Date.now() - 1000 * 60 * 30) }, // 30 minutes ago
+    { username: 'bad_criminal#4321', timestamp: new Date(Date.now() - 1000 * 60 * 60 * 3) }, // 3 hours ago
+    { username: 'quitter#7890', timestamp: new Date(Date.now() - 1000 * 60 * 60 * 48) } // 2 days ago
+  ];
+  
+  recentJoins.push(...sampleJoins);
+  recentLeaves.push(...sampleLeaves);
 }
 
 // Update bot statistics
@@ -224,10 +284,55 @@ async function handleLogsCommand(message: Message, args: string[]) {
   }
 
   try {
-    message.reply(`Here are the recent ${logType} logs for the server. This is a placeholder as actual audit log fetching would require more complex implementation.`);
+    const logData = logType === 'join' ? recentJoins : recentLeaves;
+    
+    if (logData.length === 0) {
+      return message.reply(`No recent ${logType} logs found.`);
+    }
+    
+    // Format the log data into a nice embed
+    const embed = new EmbedBuilder()
+      .setTitle(`Recent ${logType === 'join' ? 'Join' : 'Leave'} Logs`)
+      .setColor(logType === 'join' ? 0x00FF00 : 0xFF0000) // Green for joins, Red for leaves
+      .setDescription(`Showing the last ${logData.length} ${logType} events`)
+      .setTimestamp()
+      .setFooter({ text: 'ERLC Language Server Logs' });
+    
+    // Add each log entry as a field
+    logData.forEach((entry, index) => {
+      // Format the timestamp
+      const timeAgo = formatTimeAgo(entry.timestamp);
+      
+      embed.addFields({
+        name: `${index + 1}. ${entry.username}`,
+        value: `${timeAgo}`
+      });
+    });
+    
+    await message.reply({ embeds: [embed] });
   } catch (error) {
     console.error('Error fetching logs:', error);
     message.reply('There was an error trying to fetch the logs.');
+  }
+}
+
+// Helper function to format timestamps as "time ago"
+function formatTimeAgo(date: Date): string {
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffSecs = Math.floor(diffMs / 1000);
+  const diffMins = Math.floor(diffSecs / 60);
+  const diffHours = Math.floor(diffMins / 60);
+  const diffDays = Math.floor(diffHours / 24);
+  
+  if (diffDays > 0) {
+    return `${diffDays} day${diffDays !== 1 ? 's' : ''} ago`;
+  } else if (diffHours > 0) {
+    return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
+  } else if (diffMins > 0) {
+    return `${diffMins} minute${diffMins !== 1 ? 's' : ''} ago`;
+  } else {
+    return `${diffSecs} second${diffSecs !== 1 ? 's' : ''} ago`;
   }
 }
 
