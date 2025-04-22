@@ -20,8 +20,8 @@ export default function BackgroundAnimation() {
     updateCanvasSize();
     window.addEventListener("resize", updateCanvasSize);
 
-    // Create a few snowflakes (much fewer than before)
-    const snowflakes = Array.from({ length: Math.floor(window.innerWidth / 100) }, createSnowflake);
+    // Create more snowflakes for a denser effect
+    const snowflakes = Array.from({ length: Math.floor(window.innerWidth / 30) }, createSnowflake);
 
     // Animation loop
     let animationFrameId: number;
@@ -64,7 +64,9 @@ export default function BackgroundAnimation() {
         ctx.fillStyle = `rgba(255, 255, 255, ${flake.opacity})`;
         ctx.translate(flake.x * canvas.width / 100, flake.y);
         ctx.rotate((flake.rotation * Math.PI) / 180);
-        ctx.fillText("❄", 0, 0);
+        const snowflakeChars = ["❄", "❅", "❆", "✱", "✻"];
+        const char = snowflakeChars[Math.floor(Math.random() * snowflakeChars.length)];
+        ctx.fillText(char, 0, 0);
         ctx.restore();
 
         // Update snowflake position for next frame

@@ -16,11 +16,11 @@ export const formatUptimeString = (
 export function createSnowflake() {
   return {
     x: Math.random() * 100, // random x position
-    y: -10, // start above the viewport
-    size: Math.random() * 15 + 5, // random size between 5-20px
-    speed: Math.random() * 2 + 1, // random speed for falling
-    opacity: Math.random() * 0.7 + 0.3, // random opacity
+    y: Math.random() * -100, // start at different heights above the viewport
+    size: Math.random() * 20 + 8, // random size between 8-28px (larger)
+    speed: Math.random() * 3 + 0.5, // varying speeds
+    opacity: Math.random() * 0.8 + 0.2, // random opacity
     rotation: Math.random() * 360, // random initial rotation
-    rotationSpeed: Math.random() * 2 - 1, // random rotation speed
+    rotationSpeed: Math.random() * 3 - 1.5, // more varied rotation speed
   };
 }
