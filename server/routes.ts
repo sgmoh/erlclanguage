@@ -269,7 +269,13 @@ async function handleHelpCommand(message: Message) {
       timestamp: new Date().toISOString()
     };
 
-    message.channel.send({ embeds: [helpEmbed] });
+    // Send help message
+    try {
+      await message.reply({ embeds: [helpEmbed] });
+    } catch {
+      // Fallback if embed doesn't work
+      message.reply('Use ?help to see the list of commands');
+    }
   } catch (error) {
     console.error('Error sending help command:', error);
     message.reply('There was an error trying to show the help information.');
