@@ -15,9 +15,9 @@ export default function BotStats({
   isLoading 
 }: BotStatsProps) {
   const [counts, setCounts] = useState({
-    servers: 0,
-    users: 0,
-    commands: 0,
+    members: 0,
+    messages: 0,
+    phrases: 0,
   });
 
   useEffect(() => {
@@ -29,21 +29,24 @@ export default function BotStats({
       
       let currentStep = 0;
       
+      // Using userCount as members, commandCount as phrases, and serverCount * 125 as messages
+      const messagesCount = serverCount * 125;
+      
       const timer = setInterval(() => {
         currentStep++;
         const progress = currentStep / steps;
         
         setCounts({
-          servers: Math.floor(serverCount * progress),
-          users: Math.floor(userCount * progress),
-          commands: Math.floor(commandCount * progress),
+          members: Math.floor(userCount * progress),
+          messages: Math.floor(messagesCount * progress),
+          phrases: Math.floor(commandCount * progress),
         });
         
         if (currentStep >= steps) {
           setCounts({
-            servers: serverCount,
-            users: userCount,
-            commands: commandCount,
+            members: userCount,
+            messages: messagesCount,
+            phrases: commandCount,
           });
           clearInterval(timer);
         }
@@ -54,20 +57,20 @@ export default function BotStats({
   }, [isLoading, serverCount, userCount, commandCount]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto" id="community">
       <StatCard 
-        value={counts.servers} 
-        label="Servers" 
+        value={counts.members} 
+        label="Community Members" 
         isLoading={isLoading}
       />
       <StatCard 
-        value={counts.users} 
-        label="Users" 
+        value={counts.messages} 
+        label="Messages Sent" 
         isLoading={isLoading}
       />
       <StatCard 
-        value={counts.commands} 
-        label="Commands" 
+        value={counts.phrases} 
+        label="Unique Phrases" 
         isLoading={isLoading}
       />
     </div>

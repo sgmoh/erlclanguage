@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { createSnowflake } from "@/lib/utils";
 
-export default function SnowAnimation() {
+export default function BackgroundAnimation() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -20,14 +20,41 @@ export default function SnowAnimation() {
     updateCanvasSize();
     window.addEventListener("resize", updateCanvasSize);
 
-    // Create snowflakes
-    const snowflakes = Array.from({ length: Math.floor(window.innerWidth / 20) }, createSnowflake);
+    // Create a few snowflakes (much fewer than before)
+    const snowflakes = Array.from({ length: Math.floor(window.innerWidth / 100) }, createSnowflake);
 
     // Animation loop
     let animationFrameId: number;
 
+    const drawGrid = () => {
+      const gridSize = 50;
+      const lineWidth = 1;
+      
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
+      ctx.lineWidth = lineWidth;
+
+      // Draw vertical lines
+      for (let x = 0; x <= canvas.width; x += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      }
+
+      // Draw horizontal lines
+      for (let y = 0; y <= canvas.height; y += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+      }
+    };
+
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw the grid
+      drawGrid();
       
       // Draw and update snowflakes
       snowflakes.forEach((flake, index) => {
@@ -41,8 +68,11 @@ export default function SnowAnimation() {
         ctx.restore();
 
         // Update snowflake position for next frame
-        flake.y += flake.speed;
+        flake.y += flake.speed * 0.5; // Slower falling speed
         flake.rotation += flake.rotationSpeed;
+
+        // Make snowflakes float slightly left and right
+        flake.x += Math.sin(flake.y / 50) * 0.1;
 
         // Reset snowflake when it goes off screen
         if (flake.y > canvas.height + 20) {

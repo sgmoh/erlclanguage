@@ -7,19 +7,22 @@ export default function Navbar() {
       <div className="container mx-auto px-4 md:px-6 flex justify-between items-center">
         <div className="flex items-center">
           <h1 className="text-white font-poppins font-bold text-xl md:text-2xl">
-            <span className="text-primary">ERLC</span> LANGUAGE BOT
+            <span className="text-primary">ERLC</span> LANGUAGE COMMUNITY
           </h1>
         </div>
         <div className="flex items-center space-x-4">
-          <a href="#features" className="hidden md:block text-light-gray hover:text-white transition duration-200">
-            Features
+          <a href="#phrases" className="hidden md:block text-light-gray hover:text-white transition duration-200">
+            Phrases
+          </a>
+          <a href="#community" className="hidden md:block text-light-gray hover:text-white transition duration-200">
+            Community
           </a>
           <a href="#commands" className="hidden md:block text-light-gray hover:text-white transition duration-200">
-            Commands
+            Bot
           </a>
           <Button asChild>
-            <a href="https://discord.com/api/oauth2/authorize" target="_blank" rel="noopener noreferrer">
-              Add to Discord
+            <a href="https://discord.com/invitation-link" target="_blank" rel="noopener noreferrer">
+              Join Server
             </a>
           </Button>
         </div>
