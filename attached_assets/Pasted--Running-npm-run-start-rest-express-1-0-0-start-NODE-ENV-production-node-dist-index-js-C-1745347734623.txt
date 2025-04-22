@@ -1,0 +1,55 @@
+==> Running 'npm run start'
+> rest-express@1.0.0 start
+> NODE_ENV=production node dist/index.js
+Connecting to Discord...
+2:48:06 PM [express] serving on port 5000
+==> New primary port detected: 5000. Restarting deploy to update network configuration...
+==> Docs on specifying a port: https://render.com/docs/web-services#port-binding
+==> Running 'npm run start'
+> rest-express@1.0.0 start
+> NODE_ENV=production node dist/index.js
+Connecting to Discord...
+2:49:07 PM [express] serving on port 5000
+==> Your service is live 🎉
+==> Detected a new open port HTTP:5000
+2:49:45 PM [express] GET /api/bot-stats 200 in 3ms :: {"id":1,"serverCount":0,"userCount":0,"command…
+==> Detected a new open port HTTP:5000
+==> Detected a new open port HTTP:5000
+==> Detected a new open port HTTP:5000
+==> Detected a new open port HTTP:5000
+==> Detected service running on port 5000
+==> Docs on specifying a port: https://render.com/docs/web-services#port-binding
+==> Deploying...
+==> Running 'npm run start'
+> rest-express@1.0.0 start
+> NODE_ENV=production node dist/index.js
+Connecting to Discord...
+4:15:58 PM [express] serving on port 5000
+Discord bot logged in as ERLC Language#6892!
+Bot stats updated: 1 servers, 5 users
+==> Your service is live 🎉
+Bot stats updated: 1 servers, 5 users
+Bot stats updated: 1 servers, 5 users
+Bot stats updated: 1 servers, 5 users
+Bot stats updated: 1 servers, 5 users
+Bot stats updated: 1 servers, 5 users
+==> Detected service running on port 5000
+==> Docs on specifying a port: https://render.com/docs/web-services#port-binding
+Bot stats updated: 1 servers, 5 users
+Bot stats updated: 1 servers, 5 users
+Bot stats updated: 1 servers, 5 users
+Bot stats updated: 1 servers, 5 users
+Bot stats updated: 1 servers, 5 users
+Bot stats updated: 1 servers, 5 users
+Bot stats updated: 1 servers, 5 users
+Bot stats updated: 1 servers, 5 users
+Bot stats updated: 1 servers, 5 users
+Bot stats updated: 1 servers, 5 users
+Bot stats updated: 1 servers, 5 users
+==> Running 'npm run start'
+> rest-express@1.0.0 start
+> NODE_ENV=production node dist/index.js
+Connecting to Discord...
+6:02:09 PM [express] serving on port 5000
+6:02:24 PM [express] GET /api/bot-stats 200 in 2ms :: {"id":1,"serverCount":0,"userCount":0,"command…
+6:08:04 PM [express] GET /api/bot-stats 200 in 1ms :: {"id":1,"serverCount":0,"userCount":0,"command…
