@@ -9,7 +9,8 @@ import {
   Collection, 
   Message, 
   Events,
-  PermissionFlagsBits
+  PermissionFlagsBits,
+  EmbedBuilder
 } from 'discord.js';
 
 // Initialize Discord client
